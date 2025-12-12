@@ -99,19 +99,36 @@ def get_session_controls():
 # БЛОК РКН
 #═══════════════════════════════════════════════════════════════════════════════
 
+notified_users = {}
+
 def block_apps(user_id):
+    if user_id not in notified_users:
+        notified_users[user_id] = set()
+
     while user_id in active_sessions:
         try:
-            result = subprocess.check_output('tasklist', shell=True).decode('utf-8', errors='ignore')
-            
+            result = subprocess.check_output(
+                'tasklist',
+                shell=True
+            ).decode('utf-8', errors='ignore').lower()
             for app in BLOCKED_APPS:
-                if app.lower() in result.lower():
-                    os.system(f'taskkill /IM {app} /F')
-                    bot.send_message(user_id, f"Приложение {app} было закрыто!\n Фокусируйтесь на учебе!")
-            
-            threading.Event().wait(2)
+                app_lower = app.lower()
+                if app_lower in result:
+                    os.system(f'taskkill /IM "{app}" /F')
+                    if app not in notified_users[user_id]:
+                        bot.send_message(
+                            user_id,
+                             f"""
+❌ Приложение {app} было закрыто! 
+🚫 Во время сессии фокуса игровые лаунчеры блокируются.
+💪 Пожалуйста, сосредоточьтесь на учебе! 
+                             """
+                        )
+                        notified_users[user_id].add(app)
+            threading.Event().wait(1.5)
         except Exception as e:
-            print(f"Ошибка при блокировке приложений: {e}")
+                print(f"Ошибка при блокировке приложений: {e}")
+                threading.Event().wait(2)
 
 #═══════════════════════════════════════════════════════════════════════════════
 # Золото за ачивочки
