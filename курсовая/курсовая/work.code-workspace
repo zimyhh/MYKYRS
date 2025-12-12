@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../visual studio/work"
+		},
+		{
+			"path": "../../../../../visual studio/js"
+		},
+		{
+			"path": "../../../../../visual studio/Python"
+		},
+		{
+			"path": "../../../../../visual studio/goha"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "js"
+	}
+}
