@@ -46,6 +46,12 @@ BLOCKED_APPS = [
     'battlenet.exe',
     'gog.exe',
     'discord.exe',
+    'origin.exe',
+    'leagueoflegends.exe',
+    'valorant.exe',
+    'skype.exe',
+    'zoom.exe',
+    'robloxplayer.exe',
 ]
 
 # Ачивки по времени
@@ -537,3 +543,4 @@ def secret_command(message):
     bot.reply_to(message, secret_text)
 
 bot.polling(none_stop=True)
+
